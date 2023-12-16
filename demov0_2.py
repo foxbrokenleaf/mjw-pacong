@@ -69,7 +69,7 @@ for loop_counter in DownloadPlaylist_FileList:
         myBuildUrl = myUrl + "/playlist" + i.__str__() + file_name
         myDefine_file.append(myBuildUrl)
     myFile.close()
-#==========================================================================
+    #==========================================================================
 
     #========================文件下载模块=======================================
     myRequestsStatusList = []
@@ -137,3 +137,8 @@ for loop_counter in DownloadPlaylist_FileList:
     list_file_name = os.getcwd() + "\download\\filelist" #列表文件所在目录（绝对路径)
     os.system(ffmpeg_dir_bin + "ffmpeg -f concat -safe 0 -i " + list_file_name + " -c " + " copy " + out_file_name)    #执行指令
     #==================================================================================================================
+    path_file = "download\\"
+    download_file_list = os.listdir(path=path_file)
+    for i in download_file_list:
+        os.remove(path=path_file + i)
+        print("已删除[{}]".format(path_file + i))
