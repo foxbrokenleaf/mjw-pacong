@@ -3,9 +3,9 @@ import requests
 import os
 
 #==================数据区（全局）=============================
-myDefine_WebLink = "https://cdn3.tvtvgood.com/"
-myGetencode = "ca80a3c9992c"
-myGetuploaddate = "202204/21"
+myDefine_WebLink = ""
+myGetencode = ""
+myGetuploaddate = ""
 headers = {
     "user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
 }
@@ -142,3 +142,7 @@ for loop_counter in DownloadPlaylist_FileList:
     for i in download_file_list:
         os.remove(path=path_file + i)
         print("已删除[{}]".format(path_file + i))
+    path_file = "DownloadPlaylist\\"
+    download_file_list = os.listdir(path=path_file)
+    for i in download_file_list:
+        os.remove(path=path_file + i)
