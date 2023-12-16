@@ -1,0 +1,38 @@
+目前已知此网站[https://www.mjwu.cc/map]的相关信息
+[1]
+使用playlist.m3u8来获取分块的视频文件
+    [1.大致内容]
+    #EXTM3U
+    #EXT-X-VERSION:3
+    #EXT-X-TARGETDURATION:4
+    #EXT-X-MEDIA-SEQUENCE:0
+    #EXTINF:3.025622,
+    playlist0.ts
+    #EXTINF:3.002400,
+    playlist1.ts
+    #EXTINF:3.002400,
+    playlist2.ts
+    #EXT-X-ENDLIST
+    [2.获取该文件的链接]
+        {https://cdn3.tvtvgood.com/202204/21/ca80a3c9992c/playlist.m3u8?token=s6O82MxgU02uEgf77U8h-A&expires=1702569721}
+        该链接模板如下 "https://cdn" + "3" + ".tvtvgood.com/" + "202204/21/" + "ca80a3c9992c/" + "playlist.m3u8?token=" + "s6O82MxgU02uEgf77U8h-A" + "&expires=" + "1702569721"
+        其中：
+        "3" 尚未明确，大概是不同页面
+        "202204/21" 是该资源在该网站上传的日期（年月/日）
+        "ca80a3c9992c" 加密
+        "s6O82MxgU02uEgf77U8h-A"    存在于{super.php?id=CNzA3NTdfMGp1aGU=}文件中
+        "1702569721"    存在一样前缀，推测为资源编码
+    [3.已知]
+        该链接可直接下载获取(安装pyhttpx库之后)
+        浏览器中无法直接使用该链接下载(状态码410)
+[2]
+使用super.php获取"s6O82MxgU02uEgf77U8h-A"
+    [1.该文件获取链接]
+    {https://api.apiimg.com/dplay/super.php?id=CNzA3NTdfMGp1aGU=}
+    该链接模板如下 "https://api.apiimg.com/dplay/" + "super.php?id=" + "CNzA3NTdfMGp1aGU="
+    其中：
+    "CNzA3NTdfMGp1aGU=" 存在于当前请求的视频所在的页面（如：1272-1-1）的player_aaa的"url"中
+        [1]
+        目前已知仅能通过浏览器抓包获取
+        [2]
+        使用requests.get请求时返回403,拒绝请求
