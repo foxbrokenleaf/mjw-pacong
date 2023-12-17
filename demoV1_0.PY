@@ -1,3 +1,6 @@
+import os
+import requests
+from fnmatch import fnmatch
 class myMJW:
     __myDefine_WebLink = []
     __myGetencode = []
@@ -23,10 +26,10 @@ class myMJW:
                 self.__myExpires.append(i[i.find("&expires=",0,-1) + 9 : -1])   #记录链接Expires
                 self.__myDefine_WebLink.append(i[0 : i.find(".com",0,-1) + 5])  #记录链接的网页
                 self.__myGetuploaddate.append(i[i.find(".com",0,-1) + 5 : i.find(".com",0,-1) + 14])    #记录链接的资源上传日期
-                self.__myGetencode.append([i.find(".com",0,-1) + 15 : i.find("playlist",0,-1) - 1])     #记录链接的密匙
-                with open("DownloadPlaylist\\" + myExpires,'w') as SaveListFile:    #接收playlist
+                self.__myGetencode.append(i[i.find(".com",0,-1) + 15 : i.find("playlist",0,-1) - 1])     #记录链接的密匙
+                with open("DownloadPlaylist\\" + self.__myExpires[-1],'w') as SaveListFile:    #接收playlist
                     print(i)
-                    res = requests.get(i,headers=headers)
+                    res = requests.get(i,headers=self.__headers)
                     print(res.status_code)
                     for j in res.iter_content(chunk_size=1024):
                         SaveListFile.writelines(str(j))
@@ -57,6 +60,9 @@ class myMJW:
                 if fnmatch(i,"playlist*"):
                     counter += 1
             myFile.close()
+            print(self.__myDefine_WebLink[Now_counter_url])
+            print(self.__myGetuploaddate[Now_counter_url])
+            print(self.__myGetencode[Now_counter_url])
             myUrl = self.__myDefine_WebLink[Now_counter_url] + self.__myGetuploaddate[Now_counter_url] + "/" + self.__myGetencode[Now_counter_url]
             file_name = ".ts"
             myDefine_file = []
@@ -65,33 +71,46 @@ class myMJW:
                 myDefine_file.append(myBuildUrl)
             with open(DownloadPlaylist_FileList_Path + loop_counter,"w",encoding="UTF-8") as myFile:
                 for i in myDefine_file:
-                    myFile.writelines(i)
+                    myFile.writelines(i + '\n')
                 myFile.close()
             Now_counter_url += 1
+    #
     def FileDownload( self ):
         DownloadPlaylist_FileList_Path = "DownloadPlaylist\\"
         myRequestsStatusList = []
-        total = self.__myCounter_URL
+        total = 0   #要下载的ts视频的总数
+        counter_for_filed = 0
         counter = 0
-        SaveRequestsStatusListFile = open("download\\RequestsStatusListFile","w+")
         DownloadPlaylist_FileList = os.listdir(DownloadPlaylist_FileList_Path)
-        
-        for j in myDefine_file[:-1]:
-            response = requests.get(j,headers=headers,stream=True)
-            myRequestsStatusList.append([response.status_code,"playlist" + counter.__str__()])
-            SaveRequestsStatusListFile.writelines(str(myRequestsStatusList[-1]) + "\n")
-            #print(response.status_code)
-            #print(response.headers['content-length'])
-            #content_size = int(response.headers['content-length'])
-            n = 1
-            myDownload_path = "download\\" + counter.__str__() + ".ts"
-            with open(myDownload_path,"wb") as f:
-                for i in response.iter_content(chunk_size=1024):
-                    f.write(i)
+        for i in DownloadPlaylist_FileList:
+            os.mkdir("download\\" + counter_for_filed.__str__())
+            SaveRequestsStatusListFile = open("download\\" + counter_for_filed.__str__() + '\\' +"RequestsStatusListFile","w")  #保存下载的每一个文件的状态码以后续检查是否下载完全
+            with open(DownloadPlaylist_FileList_Path + i,'r') as f:
+                myDefine_file = f.readlines()
                 f.close()
-            print("\rURL [{}] ".format(j) + "已下载 [{}/{}] ".format(counter,total) + "状态码 [{}]".format(response.status_code),end="")
-            counter += 1
-        SaveRequestsStatusListFile.close()
+                temp_counter = 0
+                for temp in myDefine_file:
+                    myDefine_file[temp_counter] = temp.replace('\n','')
+                    temp_counter += 1
+                total = temp_counter
+                del temp_counter
+            for j in myDefine_file:
+                response = requests.get(j,headers=self.__headers,stream=True)
+                myRequestsStatusList.append([response.status_code,"playlist" + counter.__str__()])
+                SaveRequestsStatusListFile.writelines(str(myRequestsStatusList[-1]) + "\n")
+                #print(response.status_code)
+                #print(response.headers['content-length'])
+                #content_size = int(response.headers['content-length'])
+                myDownload_path = "download\\" + counter_for_filed.__str__() + '\\' + counter.__str__() + ".ts"
+                with open(myDownload_path,"wb") as f:
+                    for i in response.iter_content(chunk_size=1024):
+                        f.write(i)
+                    f.close()
+                print("\rURL [{}] ".format(j) + "已下载 [{}/{}] ".format(counter,total) + "状态码 [{}]".format(response.status_code),end="")
+                counter += 1
+            counter_for_filed += 1
+            SaveRequestsStatusListFile.close()
+    #
     def CheckFileDownloadCompelete( self ):
         pass
     def ReDownloadFile( self ):
@@ -100,3 +119,7 @@ class myMJW:
         pass
     def MakeCompeleteVideo( self ):
         pass
+a = myMJW()
+a.BuildExpires()
+a.BuildDownloadURL()
+a.FileDownload()
