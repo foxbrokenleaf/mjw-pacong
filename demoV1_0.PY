@@ -16,6 +16,9 @@ class myMJW:
         pass
     def __del__( self ):
         pass
+    def InputData( self ):
+        self.__myCounter_URL = 2
+        self.__myExpires = ["170281818","170281821"]
     def BuildExpires( self ):
         DownloadPlaylist_FileList_Path = "DownloadPlaylist\\"
         with open("Download_list.txt",'r') as f:
@@ -78,9 +81,8 @@ class myMJW:
     def FileDownload( self ):
         DownloadPlaylist_FileList_Path = "DownloadPlaylist\\"
         myRequestsStatusList = []
-        total = 0   #要下载的ts视频的总数
+        total = []   #要下载的ts视频的总数
         counter_for_filed = 0
-        counter = 0
         DownloadPlaylist_FileList = os.listdir(DownloadPlaylist_FileList_Path)
         for i in DownloadPlaylist_FileList:
             os.mkdir("download\\" + counter_for_filed.__str__())
@@ -92,8 +94,9 @@ class myMJW:
                 for temp in myDefine_file:
                     myDefine_file[temp_counter] = temp.replace('\n','')
                     temp_counter += 1
-                total = temp_counter
+                total.append(temp_counter)
                 del temp_counter
+            counter = 0
             for j in myDefine_file:
                 response = requests.get(j,headers=self.__headers,stream=True)
                 myRequestsStatusList.append([response.status_code,"playlist" + counter.__str__()])
@@ -106,7 +109,7 @@ class myMJW:
                     for i in response.iter_content(chunk_size=1024):
                         f.write(i)
                     f.close()
-                print("\rURL [{}] ".format(j) + "已下载 [{}/{}] ".format(counter,total) + "状态码 [{}]".format(response.status_code),end="")
+                print("\rURL [{}] ".format(j) + "已下载 [{}/{}] ".format(counter,total[counter_for_filed]) + "状态码 [{}]".format(response.status_code),end="")
                 counter += 1
             counter_for_filed += 1
             SaveRequestsStatusListFile.close()
@@ -116,10 +119,27 @@ class myMJW:
     def ReDownloadFile( self ):
         pass
     def BuildFfmpegListFile( self ):
-        pass
+        DownloadPlaylist_FileList_Path = "DownloadPlaylist\\"
+        for i in range(self.__myCounter_URL):
+            counter = 0
+            with open(DownloadPlaylist_FileList_Path + self.__myExpires[i],'r') as f:
+                for temp in f.readlines():
+                    if temp[-1] == '\n':
+                        counter += 1
+                f.close()
+            mylist = open("download\\" + i.__str__() + '\\' + "filelist","w+",encoding="UTF-8")
+            for j in range(counter):
+                mylist.writelines("file '" + j.__str__() + ".ts'\n")
+            mylist.close()
     def MakeCompeleteVideo( self ):
-        pass
+        ffmpeg_dir_bin = "ffmpeg\\bin\\" #ffmpeg所在目录(相对路径)
+        for i in range(self.__myCounter_URL):
+            out_file_name = "output\\" + i.__str__() + ".mp4"    #输出文件名b
+            list_file_name = os.getcwd() + "\download\\" + i.__str__() + '\\' + "filelist" #列表文件所在目录（绝对路径)
+            os.system(ffmpeg_dir_bin + "ffmpeg -f concat -safe 0 -i " + list_file_name + " -c " + " copy " + out_file_name)    #执行指令
 a = myMJW()
 a.BuildExpires()
 a.BuildDownloadURL()
 a.FileDownload()
+a.BuildFfmpegListFile()
+a.MakeCompeleteVideo()
