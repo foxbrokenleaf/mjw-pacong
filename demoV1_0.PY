@@ -157,6 +157,7 @@ class myMJW:
     def RemoveFolder( self ):
         file_list_main = os.listdir(".\\")
         for i in file_list_main:
+            print(i)
             if i == "download":
                 file_list_download = os.listdir("download\\")
                 file_list_downloadplaylist = os.listdir("DownloadPlaylist\\")
@@ -169,8 +170,6 @@ class myMJW:
                     os.rmdir("download\\" + i)
                 os.rmdir("download")
                 os.rmdir("DownloadPlaylist")
-            else:
-                break
     #auto
     def start( self ):
         self.RemoveFolder() #初始化文件夹
@@ -183,4 +182,3 @@ class myMJW:
         self.RemoveFolder()
         pass
 a = myMJW()
-a.start()
