@@ -155,6 +155,7 @@ class myMJW:
         os.rmdir("DownloadPlaylist")
     #auto
     def start( self ):
+        self.ReDownloadFile() #初始化文件夹
         self.BuildFolder()
         self.BuildExpires()
         self.BuildDownloadURL()
