@@ -136,9 +136,22 @@ class myMJW:
             os.system(ffmpeg_dir_bin + "ffmpeg -f concat -safe 0 -i " + list_file_name + " -c " + " copy " + out_file_name)    #执行指令
     #
     def BuildFolder( self ):
-        os.mkdir("download")
-        os.mkdir("DownloadPlaylist")
-        pass
+        file_list_main = os.listdir(".\\")
+        for i in file_list_main:
+            if i == "download":
+                break
+            else:
+                os.mkdir("download")
+        for i in file_list_main:
+            if i == "DownloadPlaylist":
+                break
+            else:
+                os.mkdir("DownloadPlaylist")
+        for i in file_list_main:
+            if i == "output":
+                break
+            else:
+                os.mkdir("output")                        
     #remove download\\*
     #remove DownloadPlaylist\\*
     def RemoveFolder( self ):
