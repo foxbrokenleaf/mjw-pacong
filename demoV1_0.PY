@@ -137,27 +137,32 @@ class myMJW:
     #
     def BuildFolder( self ):
         file_list_main = os.listdir(".\\")
+        #
+        status_check_file = 0
         for i in file_list_main:
             if i == "download":
-                break
-            else:
-                os.mkdir("download")
+                status_check_file = 1
+        if not(status_check_file == 1):
+            os.mkdir("download")
+        #
+        status_check_file = 0
         for i in file_list_main:
             if i == "DownloadPlaylist":
-                break
-            else:
-                os.mkdir("DownloadPlaylist")
+                status_check_file = 1
+        if not(status_check_file == 1):
+            os.mkdir("DownloadPlaylist")
+        #
+        status_check_file = 0
         for i in file_list_main:
             if i == "output":
-                break
-            else:
-                os.mkdir("output")                        
+                status_check_file = 1
+        if not(status_check_file == 1):
+            os.mkdir("output")                        
     #remove download\\*
     #remove DownloadPlaylist\\*
     def RemoveFolder( self ):
         file_list_main = os.listdir(".\\")
         for i in file_list_main:
-            print(i)
             if i == "download":
                 file_list_download = os.listdir("download\\")
                 file_list_downloadplaylist = os.listdir("DownloadPlaylist\\")
