@@ -142,17 +142,22 @@ class myMJW:
     #remove download\\*
     #remove DownloadPlaylist\\*
     def RemoveFolder( self ):
-        file_list_download = os.listdir("download\\")
-        file_list_downloadplaylist = os.listdir("DownloadPlaylist\\")
-        for i in file_list_downloadplaylist:
-            os.remove("DownloadPlaylist\\" + i)
-        for i in file_list_download:
-            file_list_download_i = os.listdir("download\\" + i)
-            for j in file_list_download_i:
-                os.remove("download\\" + i + '\\' + j)
-            os.rmdir("download\\" + i)
-        os.rmdir("download")
-        os.rmdir("DownloadPlaylist")
+        file_list_main = os.listdir(".\\")
+        for i in file_list_main:
+            if i == "download":
+                file_list_download = os.listdir("download\\")
+                file_list_downloadplaylist = os.listdir("DownloadPlaylist\\")
+                for i in file_list_downloadplaylist:
+                    os.remove("DownloadPlaylist\\" + i)
+                for i in file_list_download:
+                    file_list_download_i = os.listdir("download\\" + i)
+                    for j in file_list_download_i:
+                        os.remove("download\\" + i + '\\' + j)
+                    os.rmdir("download\\" + i)
+                os.rmdir("download")
+                os.rmdir("DownloadPlaylist")
+            else:
+                break
     #auto
     def start( self ):
         self.RemoveFolder() #初始化文件夹
