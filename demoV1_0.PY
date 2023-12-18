@@ -182,3 +182,4 @@ class myMJW:
         self.RemoveFolder()
         pass
 a = myMJW()
+a.start()
