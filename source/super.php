@@ -42,7 +42,7 @@
 
             var art = new Artplayer({
             container: '.artplayer-app',
-            url: 'https://cdn8.tvtvgood.com/202204/14/cd92a8ae03d0/playlist.m3u8?token=587Ch7o7FoOuD6q7EHk01g&expires=1702458825',
+            url: 'https://cdn3.tvtvgood.com/202204/21/e76bdb4f83ea/playlist.m3u8?token=UaEKoRyZfBckaFSnhoiJJA&expires=1702975730',
             poster:'https://wework.qpic.cn/wwpic/477300__CdsT_MFTNKfeCz_1684174507/0',
             setting: true,
             screenshot: true,
@@ -50,7 +50,7 @@
             autoOrientation: true,
             hotkey: true,
             pip: true,
-            quality: [{"default":true,"html":"\u7ebf\u8def1","url":"https:\/\/cdn8.tvtvgood.com\/202204\/14\/cd92a8ae03d0\/playlist.m3u8?token=587Ch7o7FoOuD6q7EHk01g&expires=1702458825"},{"default":false,"html":"\u7ebf\u8def2","url":"https:\/\/cdn4.yzzy-online.com\/20220527\/12469_3d95c069\/index.m3u8"},{"default":false,"html":"\u7ebf\u8def3","url":"https:\/\/s1.fsvod1.com\/20220314\/YJdRaeAH\/index.m3u8"}],
+            quality: [{"default":true,"html":"\u7ebf\u8def1","url":"https:\/\/cdn3.tvtvgood.com\/202204\/21\/e76bdb4f83ea\/playlist.m3u8?token=UaEKoRyZfBckaFSnhoiJJA&expires=1702975730"},{"default":false,"html":"\u7ebf\u8def2","url":"https:\/\/vip.lz-cdn5.com\/20220326\/1173_2a591d66\/index.m3u8"},{"default":false,"html":"\u7ebf\u8def3","url":"https:\/\/vip.ffzy-online2.com\/20230103\/5921_b9d5be73\/index.m3u8"}],
             flip: true,
             playbackRate: true,
             aspectRatio: true,
@@ -83,7 +83,7 @@
             },
         });
         // 获取视频的URL和当前时间
-        var videoId = 'CMzE4ODZfMGp1aGU=';
+        var videoId = 'CNzA3NTVfOWp1aGU=';
         var currentTime = '';
         var duration = '';
         var nextepisode = '';

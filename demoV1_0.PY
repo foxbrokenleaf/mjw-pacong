@@ -175,6 +175,18 @@ class myMJW:
                     os.rmdir("download\\" + i)
                 os.rmdir("download")
                 os.rmdir("DownloadPlaylist")
+    #
+    def ReadFolderInputDataForFfmpeg( self ):
+        temp = os.listdir(".\\")
+        status = 0
+        for i in temp:
+            if i == "DownloadPlaylist":
+                status = 1
+        temp = os.listdir("DownloadPlaylist\\")
+        for i in temp:
+            self.__myCounter_URL += 1
+            self.__myExpires.append(i)
+        return status
     #auto
     def start( self ):
         self.RemoveFolder() #初始化文件夹
@@ -185,6 +197,15 @@ class myMJW:
         self.BuildFfmpegListFile()
         self.MakeCompeleteVideo()
         self.RemoveFolder()
-        pass
+    #
+    def ReStart( self ):
+        if a.ReadFolderInputDataForFfmpeg() == 1:
+            a.BuildFfmpegListFile()
+            a.MakeCompeleteVideo()
+            a.RemoveFolder()
+    #
 a = myMJW()
-a.start()
+a.ReadFolderInputDataForFfmpeg()
+a.BuildFfmpegListFile()
+a.MakeCompeleteVideo()
+a.RemoveFolder()
