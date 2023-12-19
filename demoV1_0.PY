@@ -205,7 +205,4 @@ class myMJW:
             a.RemoveFolder()
     #
 a = myMJW()
-a.ReadFolderInputDataForFfmpeg()
-a.BuildFfmpegListFile()
-a.MakeCompeleteVideo()
-a.RemoveFolder()
+a.start()
