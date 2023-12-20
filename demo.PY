@@ -112,9 +112,23 @@ class myMJW:
             SaveRequestsStatusListFile.close()
     #
     def CheckFileDownloadCompelete( self ):
-        pass
+        for j in range(self.__myCounter_URL):
+            myErrorForDownload = []
+            counter = 0 #记录未下载成功的视频数
+            CheckRequestsStatusList = open("download\\" + j.__str__() + '\\' + "RequestsStatusListFile","r")
+            for i in CheckRequestsStatusList.readlines():
+                if not fnmatch(i, "*200*"):
+                    myErrorForDownload.append("playlist" + counter.__str__() + ".ts")
+                counter += 1
+            CheckRequestsStatusList.close()
+            CheckRequestsStatusList = open("download\\" + j.__str__() + '\\' + "ErrorFileList","w")
+            for i in myErrorForDownload:
+                CheckRequestsStatusList.writelines(str(i) + "\n")
+            CheckRequestsStatusList.close()
+    #
     def ReDownloadFile( self ):
         pass
+    #
     def BuildFfmpegListFile( self ):
         DownloadPlaylist_FileList_Path = "DownloadPlaylist\\"
         for i in range(self.__myCounter_URL):
@@ -194,6 +208,8 @@ class myMJW:
         self.BuildExpires()
         self.BuildDownloadURL()
         self.FileDownload()
+        self.CheckFileDownloadCompelete()
+        self.ReDownloadFile()
         self.BuildFfmpegListFile()
         self.MakeCompeleteVideo()
         self.RemoveFolder()
