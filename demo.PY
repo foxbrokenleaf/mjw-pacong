@@ -127,7 +127,18 @@ class myMJW:
             CheckRequestsStatusList.close()
     #
     def ReDownloadFile( self ):
-        pass
+        for i in myErrorForDownload:
+            myBuildUrl = myUrl + i
+            response = requests.get(myBuildUrl,headers=headers,stream=True)
+            if not response.status_code == 200:
+                print("[{}]失败，请稍后再试".format(response.status_code))
+                continue
+            myDownload_path = "download\\" + i
+            with open(myDownload_path,"wb") as f:
+                for j in response.iter_content(chunk_size=1024):
+                    f.write(j)
+                f.close()
+            print("{}已下载".format(i))
     #
     def BuildFfmpegListFile( self ):
         DownloadPlaylist_FileList_Path = "DownloadPlaylist\\"
